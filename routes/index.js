@@ -43,11 +43,13 @@ const correctAnswers = [
   "36",
 ]
 
-//create dynamically scaling quiz size support
+//route for results page
 router.get('/results', function(req, res, next) {
+  //timer is stopped and cleared
   clearInterval(interval);
   resultsList = []
   score = 0;
+  //for each userAnswer, if correctAnswer is the same add 1 to the score and list as correct
   for(var x = 0; x < 10; x++){
     if (correctAnswers[x] === userAnswers[x]){
       resultsList[x] = "Correct"
@@ -57,6 +59,7 @@ router.get('/results', function(req, res, next) {
       resultsList[x] = "Incorrect"
     }
   }
+  //render web page with data
   res.render('Results',{
     questionList:questionList,
     userAnswers:userAnswers,
@@ -66,15 +69,18 @@ router.get('/results', function(req, res, next) {
   })
 });
 
-//fix so that layout doesnt include quiz forms
-/* GET home page. */
+//route for quiz page (each question has its individual page)
 router.get('/:quizID', function(req, res, next) {
+  //if the there is no next question or the timer has gone below zero redirect
+  //user to the results page
   if(parseInt(req.params.quizID) > questionList.length || timer < 0)
   {
     res.redirect('/results')
   }
 else{
 
+  //if timer hasn't been set already, set an interval timer which executes every 1000ms 
+  //taking away from the counter variable timer
   if(interval === undefined)
   {
   interval = setInterval(() => {
@@ -84,7 +90,7 @@ else{
   }, 1000);
   }
 
-
+  //for each user answer, if the user answer is not NA then add to progress
   var progress = 0;
    userAnswers.forEach(element => {
      if(element !== "NA"){
@@ -93,11 +99,13 @@ else{
    });
   console.log(progress);
 
+  //if given quizID number is out of range or is not an integer then redirect to error page
   if(req.params.quizID > 10 || req.params.quizID < 0 || !Number.isInteger(parseInt(req.params.quizID))){
     res.render('error',{})
   }
   else
   {
+    //render quiz page with data
   res.render('Quiz1', { 
     timer: timer,
     questionProgress: progress,
@@ -110,11 +118,11 @@ else{
 });
 
 
-// POST method route
+//POST route for quiz
 router.post('/:quizID', (req, res) => {
-  //console.log(req.body)
+  //save answer from recieved request and store in userAnswers array at the corresponding
+  //question number
   userAnswers[parseInt(req.params.quizID)-1] = req.body.userAnswer
-  console.log(userAnswers)
   res.redirect('/' + req.params.quizID);
 })
 
