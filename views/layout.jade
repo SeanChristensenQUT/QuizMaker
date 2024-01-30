@@ -6,19 +6,22 @@ html
   body
     block content
 
+.block 
 
 body
   form(method='POST')
-    p
-      | answer: 
-      input(type='text', name='userAnswer', value='')
-    input(type='submit', value='Submit')
+    .answer
+      p
+        | answer: 
+        input(type='text', name='userAnswer', value='')
+    .submit
+      input(type='submit', value='Submit', class="button")
 
   a(href=nextPage)
-   button(type="button") next
+   button(type="button", class="button") next
 
   a(href=backPage)
-   button(type="button") back
+   button(type="button", class="button") back
 
   a(href='/results')
-   button(type="button") Finish
+   button(type="button", class="button") Finish

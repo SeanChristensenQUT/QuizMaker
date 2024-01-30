@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-let timer = 900
+let timer = 200
 let interval;
 
 const questionList = [
