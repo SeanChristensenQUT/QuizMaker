@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block content
+
+
+body
+  form(method='POST')
+    p
+      | answer: 
+      input(type='text', name='userAnswer', value='')
+    input(type='submit', value='Submit')
+
+  a(href=nextPage)
+   button(type="button") next
+
+  a(href=backPage)
+   button(type="button") back
+
+  a(href='/results')
+   button(type="button") Finish

@@ -1,0 +1,19 @@
+block content
+  h1= "Results"
+
+table(style='width:100%', border='1')
+    tr
+      th= "Question"
+      th= "Your answer"
+      th= "Correct answer"
+      th= "Result"
+    each question,index in questionList
+     tr
+        td= question
+        td= userAnswers[index]
+        td= correctAnswers[index]
+        td= resultsList[index]
+  h2 you scored #{score} out of 10
+  
+
+
